@@ -5,11 +5,12 @@ using Photify.Infrastructure.EntityTypeConfigurations;
 
 namespace Photify.Infrastructure
 {
-    public class PhotifyDbContext : DbContextBase<PhotifyDbContext>
+    public class PhotifyContext : DbContextBase<PhotifyContext>, IPhotifyContext
     {
-        public PhotifyDbContext(DbContextOptions<PhotifyDbContext> options, IMediator mediator = null) : base(options, mediator) { }
+        public PhotifyContext(DbContextOptions<PhotifyContext> options, IMediator mediator = null) : base(options, mediator) { }
 
-        public const string DEFAULT_SCHEMA = "photify";
+        public static string DEFAULT_SCHEMA = "photify";
+        public string Schema => DEFAULT_SCHEMA;
         public DbSet<Content> Contents { get; set; }
         public DbSet<ContentClaim> ContentClaims { get; set; }
         public DbSet<ContentMetadata> ContentMetadatas { get; set; }
@@ -18,6 +19,7 @@ namespace Photify.Infrastructure
         public DbSet<Folder> Folders { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<DataSource> DataSources { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BlobObjectEntityTypeConfiguration());
@@ -27,6 +29,8 @@ namespace Photify.Infrastructure
             modelBuilder.ApplyConfiguration(new ContentTagEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new FolderEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TagEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DataSourceEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DataSourceTypeEntityTypeConfiguration());
         }
     }
 }

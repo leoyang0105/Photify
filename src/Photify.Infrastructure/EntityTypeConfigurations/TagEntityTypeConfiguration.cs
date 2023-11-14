@@ -8,7 +8,7 @@ public class TagEntityTypeConfiguration : IEntityTypeConfiguration<Tag>
 {
     public void Configure(EntityTypeBuilder<Tag> builder)
     {
-        builder.ToTable("tag", PhotifyDbContext.DEFAULT_SCHEMA);
+        builder.ToTable("tag", PhotifyContext.DEFAULT_SCHEMA);
         builder.HasKey(x => x.Id);
         builder.Property(o => o.Id).HasColumnName("id");
 

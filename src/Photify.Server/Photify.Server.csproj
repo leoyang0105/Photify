@@ -22,6 +22,8 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Photify.Application\Photify.Application.csproj" />
+		<ProjectReference Include="..\Photify.Migrations.PostgreSQL\Photify.Migrations.PostgreSQL.csproj" />
+		<ProjectReference Include="..\Photify.Migrations.SQLite\Photify.Migrations.SQLite.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

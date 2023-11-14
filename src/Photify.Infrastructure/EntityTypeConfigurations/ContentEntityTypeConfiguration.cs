@@ -8,7 +8,7 @@ public class ContentEntityTypeConfiguration : IEntityTypeConfiguration<Content>
 {
     public void Configure(EntityTypeBuilder<Content> builder)
     {
-        builder.ToTable("content", PhotifyDbContext.DEFAULT_SCHEMA);
+        builder.ToTable("content", PhotifyContext.DEFAULT_SCHEMA);
         builder.HasKey(x => x.Id);
         builder.Property(o => o.Id).HasColumnName("id");
 

@@ -1,14 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Photify.Infrastructure.Configurations;
-using System.Reflection;
 
 namespace Photify.Infrastructure;
 
 public static class DependencyInjection
 {
-    private static  string GetOrCreateDbFullName(IConfiguration configuration)
+    private static string GetOrCreateDbFullName(IConfiguration configuration)
     {
         var configDir = configuration["CONFIG_DIR"] ?? Path.Combine(Environment.CurrentDirectory, "config");
         if (!Directory.Exists(configDir))
@@ -20,22 +18,19 @@ public static class DependencyInjection
     }
     public static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
-        var dbType = Enum.Parse<DatabaseProviderType>(configuration["DB_PROVIDER"] ?? "SQLite");
-        var identityConnection = configuration.GetConnectionString("Identity");
-        var defaultConnection = configuration.GetConnectionString("Default");
-        if (dbType == DatabaseProviderType.SQLite)
+        var provider = configuration["DB_PROVIDER"] ?? "SQLite";
+        _ = provider switch
         {
-            services.AddSQLiteDbContents($"Data Source={GetOrCreateDbFullName(configuration)}");
-        }
-        else if (dbType == DatabaseProviderType.PostgreSQL)
-        {
-            services.AddPostgreSQLDbContents(defaultConnection, identityConnection);
-        }
+            "SQLite" => services.AddSQLiteDbContents($"Data Source={GetOrCreateDbFullName(configuration)}"),
+            "PostgreSQL" => services.AddPostgreSQLDbContents(configuration.GetConnectionString("Default"), configuration.GetConnectionString("Identity")),
+            _ => throw new Exception($"Unsupported provider: {provider}")
+        };
+
         return services;
     }
     private static IServiceCollection AddPostgreSQLDbContents(this IServiceCollection services, string defaultConnection, string identityConnection = null)
     {
-        var migrationsAssembly = typeof(DependencyInjection).GetTypeInfo().Assembly.GetName().Name;
+        var migrationsAssembly = "Photify.Migrations.PostgreSQL";
 
         services.AddDbContext<IdentityContext>(options =>
         {
@@ -46,7 +41,7 @@ public static class DependencyInjection
             });
         });
 
-        services.AddDbContext<PhotifyDbContext>(options =>
+        services.AddDbContext<PhotifyContext>(options =>
         {
             options.UseNpgsql(defaultConnection, sql =>
             {
@@ -58,7 +53,7 @@ public static class DependencyInjection
     }
     private static IServiceCollection AddSQLiteDbContents(this IServiceCollection services, string defaultConnection)
     {
-        var migrationsAssembly = typeof(DependencyInjection).GetTypeInfo().Assembly.GetName().Name;
+        var migrationsAssembly = "Photify.Migrations.SQLite";
 
         services.AddDbContext<IdentityContext>(options =>
         {
@@ -68,7 +63,7 @@ public static class DependencyInjection
             });
         });
 
-        services.AddDbContext<PhotifyDbContext>(options =>
+        services.AddDbContext<PhotifyContext>(options =>
         {
             options.UseSqlite(defaultConnection, sql =>
             {

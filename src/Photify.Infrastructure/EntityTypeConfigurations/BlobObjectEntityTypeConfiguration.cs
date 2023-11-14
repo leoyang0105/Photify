@@ -9,7 +9,7 @@ public class BlobObjectEntityTypeConfiguration : IEntityTypeConfiguration<BlobOb
 {
     public void Configure(EntityTypeBuilder<BlobObject> builder)
     {
-        builder.ToTable("blob_object", PhotifyDbContext.DEFAULT_SCHEMA);
+        builder.ToTable("blob_object", PhotifyContext.DEFAULT_SCHEMA);
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id).HasMaxLength(64).HasColumnName("id").ValueGeneratedOnAdd();
@@ -21,6 +21,7 @@ public class BlobObjectEntityTypeConfiguration : IEntityTypeConfiguration<BlobOb
         builder.Property(x => x.ContentLength).HasColumnName("content_length");
         builder.Property(x => x.CreatedBy).HasMaxLength(64).HasColumnName("created_by");
         builder.Property(x => x.CreatedAt).HasColumnName("created_at");
+        builder.Property(x => x.DataSourceId).HasColumnName("data_source_id");
 
         builder.HasOne(x => x.DataSource).WithMany().HasForeignKey(x => x.DataSourceId);
     }

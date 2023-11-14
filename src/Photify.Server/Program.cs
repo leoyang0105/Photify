@@ -34,7 +34,7 @@ builder.Services.AddIdentity<User, Role>(options =>
 var app = builder.Build();
 
 app.MigrateDbContext<IdentityContext>((_, __) => { });
-app.MigrateDbContext<PhotifyDbContext>((_, __) => { });
+app.MigrateDbContext<PhotifyContext>((_, __) => { });
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

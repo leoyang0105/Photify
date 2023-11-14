@@ -8,7 +8,7 @@ public class DataSourceTypeEntityTypeConfiguration : IEntityTypeConfiguration<Da
 {
     public void Configure(EntityTypeBuilder<DataSourceType> builder)
     {
-        builder.ToTable("data_source_type", PhotifyDbContext.DEFAULT_SCHEMA);
+        builder.ToTable("data_source_type", PhotifyContext.DEFAULT_SCHEMA);
         builder.HasKey(x => x.Id);
         builder.Property(o => o.Id).HasColumnName("id").HasDefaultValue(1).ValueGeneratedNever().IsRequired();
         builder.Property(x => x.Name).HasMaxLength(64).HasColumnName("name").IsRequired();

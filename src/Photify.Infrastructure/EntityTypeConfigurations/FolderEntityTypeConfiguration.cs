@@ -8,10 +8,11 @@ public class FolderEntityTypeConfiguration : IEntityTypeConfiguration<Folder>
 {
     public void Configure(EntityTypeBuilder<Folder> builder)
     {
-        builder.ToTable("folder", PhotifyDbContext.DEFAULT_SCHEMA);
+        builder.ToTable("folder", PhotifyContext.DEFAULT_SCHEMA);
         builder.HasKey(x => x.Id);
         builder.Property(o => o.Id).HasColumnName("id");
         builder.Property(x => x.Name).HasMaxLength(64).HasColumnName("name");
+        builder.Property(x => x.ParentId).HasColumnName("parnet_id");
         builder.Property(x => x.Description).HasMaxLength(512).HasColumnName("description");
 
         builder.Property(x => x.ThumbnailBlobId).HasMaxLength(64).HasColumnName("thumbnail_blob_id");

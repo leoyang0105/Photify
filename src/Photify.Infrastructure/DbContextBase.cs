@@ -1,17 +1,11 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
-using Photify.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Photify.Infrastructure.Extensions;
 
 namespace Photify.Infrastructure
 {
-    public abstract class DbContextBase<T> : DbContext, IUnitOfWork where T : DbContext, IUnitOfWork
+    public abstract class DbContextBase<T> : DbContext where T : DbContext, IDbContext
     {
         private readonly IMediator _mediator = null;
         private IDbContextTransaction _currentTransaction;
