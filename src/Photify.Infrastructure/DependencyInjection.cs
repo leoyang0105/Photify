@@ -1,20 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Photify.Infrastructure.FileStorages;
 
 namespace Photify.Infrastructure;
 
 public static class DependencyInjection
 {
-    private static string GetOrCreateDbFullName(IConfiguration configuration)
+    public static IServiceCollection AddFileStorages(this IServiceCollection services, IConfiguration configuration)
     {
-        var configDir = configuration["CONFIG_DIR"] ?? Path.Combine(Environment.CurrentDirectory, "config");
-        if (!Directory.Exists(configDir))
-        {
-            Directory.CreateDirectory(configDir);
-        }
-        var dbPath = Path.Combine(configDir, "photify.db");
-        return dbPath;
+        services.AddSingleton<IFileStorageFactory, FileStorageFactory>();
+        return services;
     }
     public static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
@@ -27,6 +23,18 @@ public static class DependencyInjection
         };
 
         return services;
+    }
+    #region private methods
+
+    private static string GetOrCreateDbFullName(IConfiguration configuration)
+    {
+        var configDir = configuration["CONFIG_DIR"] ?? Path.Combine(Environment.CurrentDirectory, "config");
+        if (!Directory.Exists(configDir))
+        {
+            Directory.CreateDirectory(configDir);
+        }
+        var dbPath = Path.Combine(configDir, "photify.db");
+        return dbPath;
     }
     private static IServiceCollection AddPostgreSQLDbContents(this IServiceCollection services, string defaultConnection, string identityConnection = null)
     {
@@ -41,7 +49,7 @@ public static class DependencyInjection
             });
         });
 
-        services.AddDbContext<PhotifyContext>(options =>
+        services.AddDbContext<IPhotifyContext, PhotifyContext>(options =>
         {
             options.UseNpgsql(defaultConnection, sql =>
             {
@@ -63,7 +71,7 @@ public static class DependencyInjection
             });
         });
 
-        services.AddDbContext<PhotifyContext>(options =>
+        services.AddDbContext<IPhotifyContext, PhotifyContext>(options =>
         {
             options.UseSqlite(defaultConnection, sql =>
             {
@@ -72,4 +80,5 @@ public static class DependencyInjection
         });
         return services;
     }
+    #endregion
 }

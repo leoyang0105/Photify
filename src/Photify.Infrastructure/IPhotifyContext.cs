@@ -10,7 +10,7 @@ namespace Photify.Infrastructure
         DbSet<Content> Contents { get; set; }
         DbSet<ContentTag> ContentTags { get; set; }
         DbSet<DataSource> DataSources { get; set; }
-        DbSet<BlobObject> FileObjects { get; set; }
+        DbSet<FileObject> FileObjects { get; set; }
         DbSet<Folder> Folders { get; set; }
         DbSet<Tag> Tags { get; set; }
     }

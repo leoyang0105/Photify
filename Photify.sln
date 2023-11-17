@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Photify.Infrastructure", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Photify.Server", "src\Photify.Server\Photify.Server.csproj", "{BCD742F4-A6FF-4293-A45E-13F63F67350E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Photify.Migrations.SQLite", "src\Photify.Migrations.SQLite\Photify.Migrations.SQLite.csproj", "{653FA294-3550-4FAD-A4D3-3EDB0C005088}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Photify.Migrations.SQLite", "src\Photify.Migrations.SQLite\Photify.Migrations.SQLite.csproj", "{653FA294-3550-4FAD-A4D3-3EDB0C005088}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Photify.Migrations.PostgreSQL", "src\Photify.Migrations.PostgreSQL\Photify.Migrations.PostgreSQL.csproj", "{159E8B55-4C3F-496B-8221-FE3A118EDEA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Photify.Migrations.PostgreSQL", "src\Photify.Migrations.PostgreSQL\Photify.Migrations.PostgreSQL.csproj", "{159E8B55-4C3F-496B-8221-FE3A118EDEA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Photify.FileProcessor", "src\Photify.FileProcessor\Photify.FileProcessor.csproj", "{FB37D99F-32C6-427A-97D9-65B86DD805BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{159E8B55-4C3F-496B-8221-FE3A118EDEA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{159E8B55-4C3F-496B-8221-FE3A118EDEA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{159E8B55-4C3F-496B-8221-FE3A118EDEA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB37D99F-32C6-427A-97D9-65B86DD805BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB37D99F-32C6-427A-97D9-65B86DD805BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB37D99F-32C6-427A-97D9-65B86DD805BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB37D99F-32C6-427A-97D9-65B86DD805BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{BCD742F4-A6FF-4293-A45E-13F63F67350E} = {4268E521-B8B8-40E4-9743-B5635FA9A62C}
 		{653FA294-3550-4FAD-A4D3-3EDB0C005088} = {4268E521-B8B8-40E4-9743-B5635FA9A62C}
 		{159E8B55-4C3F-496B-8221-FE3A118EDEA7} = {4268E521-B8B8-40E4-9743-B5635FA9A62C}
+		{FB37D99F-32C6-427A-97D9-65B86DD805BF} = {4268E521-B8B8-40E4-9743-B5635FA9A62C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95139A1E-4A49-45E9-854C-3AC0F3FADAEC}

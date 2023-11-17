@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Photify.Domain.Identity;
 using Photify.Infrastructure;
+using Photify.Application;
 using Photify.Server.Extensions;
+using Photify.Server.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +13,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContexts(builder.Configuration);
+builder.Services.AddApplication(builder.Configuration);
+
 builder.Services.AddIdentity<User, Role>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -34,7 +37,10 @@ builder.Services.AddIdentity<User, Role>(options =>
 var app = builder.Build();
 
 app.MigrateDbContext<IdentityContext>((_, __) => { });
-app.MigrateDbContext<PhotifyContext>((_, __) => { });
+app.MigrateDbContext<PhotifyContext>(async (db, sp) =>
+{
+    await PhotifyContextSeed.SeedAsync(sp, db);
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

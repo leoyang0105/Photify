@@ -9,13 +9,13 @@ namespace Photify.Infrastructure.Cache
         private static readonly ConcurrentDictionary<string, CancellationTokenSource> _keys = new ConcurrentDictionary<string, CancellationTokenSource>();
         private static CancellationTokenSource _cancellationToken = new CancellationTokenSource();
         private readonly IMemoryCache _memoryCache;
-        private readonly CacheOptions _options;
+        private readonly int _defaultCacheTimeMinutes;
         public MemoryCacheManager(
             IMemoryCache memoryCache,
-            CacheOptions options)
+            int defaultCacheTimeMinutes)
         {
             _memoryCache = memoryCache;
-            _options = options;
+            _defaultCacheTimeMinutes = defaultCacheTimeMinutes;
         }
 
         public async Task ClearAsync()
@@ -38,7 +38,7 @@ namespace Photify.Infrastructure.Cache
 
         public async Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> acquire)
         {
-            return await GetOrCreateAsync(key, acquire, _options.DefaultCacheTimeMinutes);
+            return await GetOrCreateAsync(key, acquire, _defaultCacheTimeMinutes);
         }
 
         public async Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> acquire, int cacheTime)
@@ -93,7 +93,7 @@ namespace Photify.Infrastructure.Cache
 
         public async Task SetAsync<T>(string key, T data)
         {
-            await this.SetAsync(key, data, _options.DefaultCacheTimeMinutes);
+            await this.SetAsync(key, data, _defaultCacheTimeMinutes);
         }
 
         public async Task SetAsync<T>(string key, T data, int cacheTime)

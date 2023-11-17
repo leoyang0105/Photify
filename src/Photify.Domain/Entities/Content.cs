@@ -5,9 +5,10 @@ public class Content : Entity, IAggregateRoot
     private ICollection<ContentClaim> _contentClaims;
     private ICollection<ContentTag> _contentTags;
     public int FolderId { get; set; }
-    public string BlobId { get; set; }
+    public string FileId { get; set; }
     public string ThumbnailBlobId { get; set; }
     public string Name { get; set; }
+    public string Format { get; set; }
     public string Description { get; set; }
     public long ContentLength { get; set; }
     public string CreatedBy { get; set; }

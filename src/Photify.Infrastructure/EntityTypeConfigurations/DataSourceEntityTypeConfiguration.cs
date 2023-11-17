@@ -19,8 +19,7 @@ public class DataSourceEntityTypeConfiguration : IEntityTypeConfiguration<DataSo
         builder.Property(x => x.CreatedAt).HasColumnName("created_at");
         builder.Property(x => x.DeletedAt).HasColumnName("deleted_at");
         builder.Property(x => x.IsDeleted).HasColumnName("is_deleted");
-
-        builder.Property<int>("_sourceTypeId").UsePropertyAccessMode(PropertyAccessMode.Field).HasColumnName("source_type_id").IsRequired();
-        builder.HasOne(o => o.SourceType).WithMany().HasForeignKey("_sourceTypeId");
+        builder.Property(x => x.Type).HasColumnName("type");
+        builder.Property(x => x.Status).HasColumnName("status");
     }
 }

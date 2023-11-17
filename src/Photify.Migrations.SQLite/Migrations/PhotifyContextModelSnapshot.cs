@@ -17,53 +17,6 @@ namespace Photify.Migrations.SQLite.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
 
-            modelBuilder.Entity("Photify.Domain.Entities.BlobObject", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(64)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("id");
-
-                    b.Property<long>("ContentLength")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("content_length");
-
-                    b.Property<string>("ContentType")
-                        .HasMaxLength(64)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("content_type");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(64)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("created_by");
-
-                    b.Property<int>("DataSourceId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("data_source_id");
-
-                    b.Property<string>("FileName")
-                        .HasMaxLength(64)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("file_name");
-
-                    b.Property<string>("FilePath")
-                        .HasMaxLength(512)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("file_path");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DataSourceId");
-
-                    b.ToTable("blob_object", "photify");
-                });
-
             modelBuilder.Entity("Photify.Domain.Entities.Content", b =>
                 {
                     b.Property<int>("Id")
@@ -227,33 +180,64 @@ namespace Photify.Migrations.SQLite.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
 
-                    b.Property<int>("_sourceTypeId")
+                    b.Property<int>("Status")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("source_type_id");
+                        .HasColumnName("status");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("type");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("_sourceTypeId");
 
                     b.ToTable("data_source", "photify");
                 });
 
-            modelBuilder.Entity("Photify.Domain.Entities.DataSourceType", b =>
+            modelBuilder.Entity("Photify.Domain.Entities.FileObject", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("INTEGER")
-                        .HasDefaultValue(1)
-                        .HasColumnName("id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(64)
                         .HasColumnType("TEXT")
-                        .HasColumnName("name");
+                        .HasColumnName("id");
+
+                    b.Property<long>("ContentLength")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("content_length");
+
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("content_type");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("created_by");
+
+                    b.Property<int>("DataSourceId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("data_source_id");
+
+                    b.Property<string>("FileName")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("file_name");
+
+                    b.Property<string>("FilePath")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("file_path");
 
                     b.HasKey("Id");
 
-                    b.ToTable("data_source_type", "photify");
+                    b.HasIndex("DataSourceId");
+
+                    b.ToTable("file_object", "photify");
                 });
 
             modelBuilder.Entity("Photify.Domain.Entities.Folder", b =>
@@ -347,17 +331,6 @@ namespace Photify.Migrations.SQLite.Migrations
                     b.ToTable("tag", "photify");
                 });
 
-            modelBuilder.Entity("Photify.Domain.Entities.BlobObject", b =>
-                {
-                    b.HasOne("Photify.Domain.Entities.DataSource", "DataSource")
-                        .WithMany()
-                        .HasForeignKey("DataSourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DataSource");
-                });
-
             modelBuilder.Entity("Photify.Domain.Entities.ContentClaim", b =>
                 {
                     b.HasOne("Photify.Domain.Entities.Content", "Content")
@@ -399,15 +372,15 @@ namespace Photify.Migrations.SQLite.Migrations
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("Photify.Domain.Entities.DataSource", b =>
+            modelBuilder.Entity("Photify.Domain.Entities.FileObject", b =>
                 {
-                    b.HasOne("Photify.Domain.Entities.DataSourceType", "SourceType")
+                    b.HasOne("Photify.Domain.Entities.DataSource", "DataSource")
                         .WithMany()
-                        .HasForeignKey("_sourceTypeId")
+                        .HasForeignKey("DataSourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SourceType");
+                    b.Navigation("DataSource");
                 });
 
             modelBuilder.Entity("Photify.Domain.Entities.Content", b =>
