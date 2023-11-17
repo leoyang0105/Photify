@@ -9,6 +9,8 @@ using Photify.Application.Services;
 using Photify.Application.IntegrationEvents.EventHandling;
 using Photify.Application.Queries;
 using Photify.Application.Interfaces;
+using Photify.FileProcessor;
+using Photify.Application.Services.FileProcessor;
 
 namespace Photify.Application
 {
@@ -36,8 +38,13 @@ namespace Photify.Application
         {
             services.AddSingleton<IFileProcessorFactory, FileProcessorFactory>();
             services.AddSingleton<ImageProcessor>();
-            services.AddSingleton<VideoFileProcessor>();
+            services.AddSingleton<VideoProcessor>();
             services.AddSingleton<UnsupportedFileProcessor>();
+
+            services.AddSingleton<IThumbnailGeneratorFactory, ThumbnailGeneratorFactory>();
+            services.AddSingleton<ImageThumbnailGenerator>();
+            services.AddSingleton<VideoThumbnailGenerator>();
+            services.AddSingleton<DefaultThumbnailGenerator>();
             return services;
         }
         public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)

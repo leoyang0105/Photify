@@ -4,9 +4,9 @@ namespace Photify.FileProcessor
 {
     public class ImageThumbnailGenerator : IThumbnailGenerator
     {
-        public string[] SupportFormats => throw new NotImplementedException();
+        public string[] SupportFormats => new string[] { "jpg","png","jpge"};
 
-        public Task<Stream> GenerateThumbnail(IFileObject fileObject)
+        public Task<Stream> GenerateThumbnail(Stream source, ThumbnailSize size)
         {
             throw new NotImplementedException();
         }

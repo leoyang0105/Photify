@@ -1,4 +1,6 @@
-﻿namespace Photify.Application.Interfaces
+﻿using Photify.Infrastructure.FileStorages;
+
+namespace Photify.Application.Interfaces
 {
     public enum ThumbnailSize
     {
@@ -7,8 +9,8 @@
         Large,
     }
     public interface IThumbnailGenerator
-    { 
+    {
         string[] SupportFormats { get; }
-        Task<Stream> GenerateThumbnail(IFileObject fileObject, ThumbnailSize size);
+        Task<Stream> GenerateThumbnail(Stream source, ThumbnailSize size);
     }
 }

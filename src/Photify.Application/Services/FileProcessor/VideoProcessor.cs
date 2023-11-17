@@ -1,4 +1,6 @@
 ﻿using Photify.Application.Interfaces;
+using Photify.Domain.Entities;
+using Photify.Infrastructure.FileStorages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ public class VideoProcessor : IFileProcessor
 {
     public string[] SupportFormats => new string[] { };
 
-    public Task Process(IFileObject fileObject)
+    public Task Process(DataSource dataSource, IFileObject fileObject)
     {
         throw new NotImplementedException();
     }

@@ -1,18 +1,17 @@
 ﻿using Photify.Application.Interfaces;
+using Photify.Domain.Entities;
+using Photify.Infrastructure.FileStorages;
 
 namespace Photify.FileProcessor
 {
     public class ImageProcessor : IFileProcessor
     {
         private readonly IThumbnailGeneratorFactory _thumbnailGeneratorFactory;
-        private readonly IFileProviderFactory _fileProviderFactory;
-        public ImageProcessor(
-            IThumbnailGeneratorFactory thumbnailGeneratorFactory,
-            IFileProviderFactory fileProviderFactory)
+        private readonly IFileStorageFactory _fileStorageFactory;
+        public ImageProcessor(IThumbnailGeneratorFactory thumbnailGeneratorFactory, IFileStorageFactory fileStorageFactory)
         {
             _thumbnailGeneratorFactory = thumbnailGeneratorFactory;
-            _fileProviderFactory = fileProviderFactory;
-
+            _fileStorageFactory = fileStorageFactory;
         }
         public string[] SupportFormats => new string[] { };
 
@@ -23,12 +22,17 @@ namespace Photify.FileProcessor
             throw new NotImplementedException();
         }
         private async Task GenerateThumbnails(IFileObject fileObject)
-        { 
+        {
         }
-        private async Task GenerateThumbnail(IFileObject fileObject,ThumbnailSize size)
+        private async Task GenerateThumbnail(IFileObject fileObject, ThumbnailSize size)
         {
             var thumbnailGenerator = _thumbnailGeneratorFactory.GetThumbnailGenerator(fileObject.Format);
-            var stream = thumbnailGenerator.GenerateThumbnail(fileObject, size);
+            // var stream = thumbnailGenerator.GenerateThumbnail(fileObject, size);
+        }
+
+        public Task Process(DataSource dataSource, IFileObject fileObject)
+        {
+            throw new NotImplementedException();
         }
     }
 }
